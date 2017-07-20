@@ -12,6 +12,8 @@ export class ProductListComponent {
     imageMargin: number = 2;
     showImage: boolean = false;
     filterText: string = "";
+
+
     currencyFormat: string = "USD";
     showSymbol: boolean = true;
     format: string = "1.2-2";
