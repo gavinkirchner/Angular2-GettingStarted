@@ -29,7 +29,8 @@
                         <th>Code</th>
                         <th>Available</th>
                         <th>Price</th>
-                        <th>5 Star Rating</th>
+                        <th>Rating</th>
+                        <th>Stars</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,8 @@
                         <td>{{ product.releaseDate }}</td>
                         <td>{{ product.price | currency:currency:showSymbol:format }}</td>
                         <td>{{ product.starRating }}</td>
+                        <td><ai-star [rating]='product.starRating'
+                                     (ratingClicked)='onRatingClicked($event)'></ai-star></td>
                     </tr>
                 </tbody>
             </table>
