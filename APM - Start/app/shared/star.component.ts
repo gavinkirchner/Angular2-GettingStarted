@@ -10,14 +10,23 @@ import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core
 export class StarComponent implements OnChanges{
     totalStarWidth: number = 86;
     starWidth: number;
-    @Input() rating: number = 4;
+    maxStars: number = 5;
+    @Input() rating: number;
     @Output() ratingClicked: EventEmitter<string> = new EventEmitter<string>();
 
     ngOnChanges(): void {
-        this.starWidth = this.rating * this.totalStarWidth / 5.0;
+        this.starWidth = this.rating * this.totalStarWidth / this.maxStars;
     }
 
-    onClick(): void {
-        this.ratingClicked.emit(`The rating ${this.rating} was clicked!`);
+    onClick(event: any): void {
+        let rect = event.target.getBoundingClientRect();
+        let x = event.pageX - rect.left;
+        let y = event.pageY - rect.top;
+
+        let newRating = x / this.totalStarWidth * this.maxStars;
+        newRating = Math.round(newRating * 10) / 10;
+        newRating *= this.maxStars;
+
+        this.ratingClicked.emit(`The rating ${newRating} was clicked!`);
     }
 }
