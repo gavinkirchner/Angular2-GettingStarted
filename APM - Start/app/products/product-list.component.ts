@@ -16,7 +16,7 @@ export class ProductListComponent implements OnInit {
     imageMargin: number = 2;
     showImage: boolean = false;
     filterText: string = '';
-
+    errorMessage: string;
 
     currencyFormat: string = 'USD';
     showSymbol: boolean = true;
@@ -33,7 +33,9 @@ export class ProductListComponent implements OnInit {
     ngOnInit(): void {
         console.log('this is the oninit of the productlist component');
 
-        this.products = this._productService.getProducts();
+        this._productService.getProducts().subscribe(
+            p => this.products = p,
+            e => this.errorMessage = e);
     }
 
     onRatingClicked(message: string): void {
