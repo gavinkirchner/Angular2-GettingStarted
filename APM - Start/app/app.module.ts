@@ -11,6 +11,8 @@ import { ProductFilterPipe } from './products/product-list.pipe';
 import { StarComponent } from './shared/star.component';
 import { ProductService } from './products/product.service';
 import { WelcomeComponent } from './home/welcome.component';
+import { ProductDetailGuard } from './products/product-detail.guard';
+import { ForNumberDirective } from './shared/for-number.directive';
 
 @NgModule({
   imports: [
@@ -19,11 +21,16 @@ import { WelcomeComponent } from './home/welcome.component';
     HttpModule,
     RouterModule.forRoot([
       { path: 'products', component: ProductListComponent },
-      { path: 'product/:id', component: ProductDetailComponent },
+      {
+        path: 'product/:id',
+        canActivate: [ ProductDetailGuard ],
+        resolve: { product: ProductDetailGuard },
+        component: ProductDetailComponent
+      },
       { path: 'welcome', component: WelcomeComponent },
       { path: '', redirectTo: 'welcome', pathMatch: 'full'},
       { path: '**', redirectTo: 'welcome', pathMatch: 'full'}
-    ])
+    ], {enableTracing: true})
   ],
   declarations: [
     AppComponent,
@@ -31,9 +38,13 @@ import { WelcomeComponent } from './home/welcome.component';
     ProductDetailComponent,
     ProductFilterPipe,
     StarComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    ForNumberDirective
   ],
   bootstrap: [ AppComponent ],
-  providers: [ ProductService ]
+  providers: [
+    ProductService,
+    ProductDetailGuard
+  ]
 })
 export class AppModule { }

@@ -22,6 +22,11 @@ export class ProductService {
         }
     }
 
+    getProduct(id: number): Observable<IProduct> {
+        return this.getProducts()
+            .map((products: IProduct[]) => products.find(p => p.productId === id));
+    }
+
     private handleError(Error: Response): void {
         console.error(Error);
     }
