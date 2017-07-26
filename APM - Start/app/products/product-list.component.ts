@@ -37,8 +37,4 @@ export class ProductListComponent implements OnInit {
             p => this.products = p,
             e => this.errorMessage = e);
     }
-
-    onRatingClicked(message: string): void {
-        this.pageTitle = message;
-    }
 }

@@ -11,22 +11,36 @@ export class StarComponent implements OnChanges {
     starWidth: number;
     maxStars: number = 10;
     totalStarWidth: number = this.maxStars * 14;
+    isSelected: boolean = false;
+    starClass: string = 'glyphicon glyphicon-star';
     @Input() rating: number;
-    @Output() ratingClicked: EventEmitter<string> = new EventEmitter<string>();
+    @Input() isEditable: boolean = false;
+    @Output() ratingClicked: EventEmitter<number> = new EventEmitter<number>();
 
     ngOnChanges(): void {
         this.starWidth = this.rating * this.totalStarWidth / this.maxStars;
     }
 
     onClick(event: any): void {
-        let rect = event.target.getBoundingClientRect();
-        let x = event.pageX - rect.left;
-        let y = event.pageY - rect.top;
 
-        let newRating = x / this.totalStarWidth * this.maxStars;
-        newRating = Math.round(newRating * 10) / 10;
-        newRating *= this.maxStars;
+        if (this.isEditable) {
+            if (this.isSelected) {
+                this.starClass = 'glyphicon glyphicon-star';
+            } else {
+                this.starClass = 'glyphicon glyphicon-star-empty';
+            }
 
-        this.ratingClicked.emit(`The rating ${newRating} was clicked!`);
+            this.isSelected = !this.isSelected;
+        
+            // let rect = event.target.getBoundingClientRect();
+            // let x = event.pageX - rect.left;
+            // let y = event.pageY - rect.top;
+
+            // let newRating = x / this.totalStarWidth * this.maxStars;
+            // newRating = Math.round(newRating * 10) / 10;
+            // newRating *= this.maxStars;
+
+            this.ratingClicked.emit(1);
+        }
     }
 }

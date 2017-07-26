@@ -3,10 +3,8 @@
      [title]="rating"
      (click)='onClick($event)'>
     <div [style.width.px]="totalStarWidth">
-        <span class="glyphicon glyphicon-star" *pmForNumber='maxStars'></span>
-        <!-- <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span>
-        <span class="glyphicon glyphicon-star"></span> -->
+        <span [class]="starClass" 
+              *pmForNumber='maxStars'>
+        </span>
     </div>
 </div>

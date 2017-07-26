@@ -32,4 +32,8 @@ export class ProductDetailComponent implements OnInit {
     onBack(): void {
         this._router.navigate(['/products']);
     }
+
+    onRatingClicked(newRating: number): void {
+        this.product.starRating = newRating;
+    }
 }
