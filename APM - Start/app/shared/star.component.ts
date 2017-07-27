@@ -1,5 +1,7 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 
+import { IStar } from './star';
+
 @Component({
     selector: 'ai-star',
     moduleId: module.id,
@@ -12,35 +14,41 @@ export class StarComponent implements OnChanges {
     maxStars: number = 10;
     totalStarWidth: number = this.maxStars * 14;
     isSelected: boolean = false;
-    starClass: string = 'glyphicon glyphicon-star';
+
+    stars: IStar[] = [];
+
     @Input() rating: number;
     @Input() isEditable: boolean = false;
     @Output() ratingClicked: EventEmitter<number> = new EventEmitter<number>();
 
     ngOnChanges(): void {
-        this.starWidth = this.rating * this.totalStarWidth / this.maxStars;
+        this.setRating(this.rating);
     }
 
-    onClick(event: any): void {
-
+    onClick(event: any, i: any): void {
         if (this.isEditable) {
-            if (this.isSelected) {
-                this.starClass = 'glyphicon glyphicon-star';
-            } else {
-                this.starClass = 'glyphicon glyphicon-star-empty';
-            }
+            this.rating = i + 1;
+            this.setRating(this.rating);
+        }
 
-            this.isSelected = !this.isSelected;
-        
-            // let rect = event.target.getBoundingClientRect();
-            // let x = event.pageX - rect.left;
-            // let y = event.pageY - rect.top;
+        this.ratingClicked.emit(this.rating);
+    }
 
-            // let newRating = x / this.totalStarWidth * this.maxStars;
-            // newRating = Math.round(newRating * 10) / 10;
-            // newRating *= this.maxStars;
+    private setRating(newRating: number): void {
+        if (this.stars.length === 0) {
+            this.initStars();
+        }
 
-            this.ratingClicked.emit(1);
+        for (let i = 0; i < this.maxStars; i++) {
+            let turnOnStar: boolean = i < newRating;
+            this.stars[i].isOn = turnOnStar;
+        }
+    }
+
+    private initStars(): void {
+        for (let i = 0; i < this.maxStars; i++) {
+            let star: IStar = { isOn: false };
+            this.stars.push(star);
         }
     }
 }

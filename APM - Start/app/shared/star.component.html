@@ -1,10 +1,14 @@
 <div class="crop" 
-     [style.width.px]="starWidth"
-     [title]="rating"
-     (click)='onClick($event)'>
+     [style.width.px]="totalStarWidth"
+     [title]="rating">
     <div [style.width.px]="totalStarWidth">
-        <span [class]="starClass" 
-              *pmForNumber='maxStars'>
+        <!-- <span [class]="starClass" 
+              *pmForNumber='maxStars'
+              (click)='onClick($event)'>
+        </span> -->
+        <span *ngFor="let star of stars; let i = index"
+              [class]="star.isOn ? 'glyphicon glyphicon-star' : 'glyphicon glyphicon-star-empty'"
+              (click)='onClick($event, i)'>
         </span>
     </div>
 </div>
