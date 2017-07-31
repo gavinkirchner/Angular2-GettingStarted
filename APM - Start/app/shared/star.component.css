@@ -1,6 +1,12 @@
 .crop {
     overflow: hidden;
 }
+.activeStar {
+    color: gold;
+}
+.inactiveStar {
+    color: black;
+}
 div {
     cursor: pointer;
 }

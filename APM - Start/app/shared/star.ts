@@ -1,3 +1,4 @@
 export interface IStar {
-    isOn: boolean;
+    isSelected: boolean;
+    isActive: boolean;
 }
